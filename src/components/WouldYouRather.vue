@@ -1,12 +1,14 @@
 <template>
   <div class="hello">
-    
+
+    <h2>Please make your choice!</h2>
+
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'WouldYouRather',
   props: {
     msg: String
   }
