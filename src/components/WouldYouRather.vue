@@ -1,21 +1,21 @@
 <template>
   <div class="wyr">
 
-    <h2 id="choice-msg-h2">Please make your choice!</h2>
+    <h2 id="choice-msg-h2">Would you rather...</h2>
 
-    <h3 id="question-h3">{{question}}</h3>
-
-    <input type="radio" 
-      v-model="choice" 
-      v-bind:value="answer1" 
-      v-on:change="choiceMade">
-    <label>{{answer1}}</label>
+    <h3 id="question-h3">{{question.wyrQuestion}}</h3>
 
     <input type="radio" 
       v-model="choice" 
-      v-bind:value="answer2" 
+      v-bind:value="question.wyrAnswer1" 
       v-on:change="choiceMade">
-    <label>{{answer2}}</label>
+    <label>{{question.wyrAnswer1}}</label>
+
+    <input type="radio" 
+      v-model="choice" 
+      v-bind:value="question.wyrAnswer2" 
+      v-on:change="choiceMade">
+    <label>{{question.wyrAnswer2}}</label>
 
   </div>
 </template>
@@ -24,9 +24,7 @@
 export default {
   name: 'WouldYouRather',
   props: {
-    question: String,
-    answer1: String,
-    answer2: String
+    question: Object
   },
   data() {
     return {
@@ -44,19 +42,20 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-#choice-msg-h2 {
-  padding-bottom: 5px;
-}
+  #choice-msg-h2 {
+    padding-bottom: 5px;
+  }
 
-#question-h3 {
-  margin: 40px 0 0;
-  padding-bottom: 25px;
-}
-.wyr {
-  border: 2px solid;
-  padding: 30px;
-  background-color: darkslategrey;
-  color: white;
-}
+  #question-h3 {
+    margin: 40px 0 0;
+    padding-bottom: 25px;
+  }
+  
+  .wyr {
+    border: 2px solid;
+    padding: 30px;
+    background-color: darkslategrey;
+    color: white;
+  }
 
 </style>
