@@ -1,7 +1,7 @@
 <template>
   <div class="wyr">
 
-    <h2 id="choice-msg-h2">Would you rather...</h2>
+    <h2 id="wyr-msg-h2">Would you rather...</h2>
 
     <h3 id="question-h3">{{question.wyrQuestion}}</h3>
 
@@ -24,7 +24,7 @@
 export default {
   name: 'WouldYouRather',
   props: {
-    question: Object
+    question: Object,
   },
   data() {
     return {
@@ -33,7 +33,7 @@ export default {
   }, 
   methods: {
     choiceMade() {
-      this.$emit('answer-changed', this.choice)
+      this.$emit('answer-changed', this.choice) // Let parent know that change event of choice has occured
     }
   }
 }
@@ -42,7 +42,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-  #choice-msg-h2 {
+  #wyr-msg-h2 {
     padding-bottom: 5px;
   }
 

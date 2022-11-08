@@ -1,18 +1,28 @@
 <template>
   <div id="app">
 
-      <h1 id="wyr-h1">Would you rather?</h1>
+      <h1 class="wyr-h1">Would you rather?</h1>
 
-      <would-you-rather
+      <would-you-rather        
         v-for="question in questions"
+        v-bind:question="question"
         v-bind:key="question.id"
-        v-bind:wyr-question="question.wyrQuestion"
-        v-bind:wyr-answer-one="question.wyrAnswer1"
-        v-bind:wyr-answer-two="question.wyrAnswer2"
-        v-bind:user-selection-msg="question.wyrSelectionMsg"
         v-on:answer-changed="answerChanged">
-        <p id="user-selection-msg-p">{{question.userSelectionMsg}}</p>
-      </would-you-rather>   
+      </would-you-rather> 
+
+      <h1 class="wyr-h1">You would rather...</h1>
+
+      <!-- Only show this message if choice made is not true - which changes when choice
+          made method is called and a selection is added to list-->
+      <p id="user-message" v-show="!choiceMade">Make some choices above!</p>
+
+    <!-- Display list of user choices -->
+    <ul class="userSelection">
+      <li v-for="selection in userSelections" 
+        v-bind:key="selection">
+        {{selection}}
+      </li>
+    </ul>  
   </div>
 </template>
 
@@ -29,32 +39,39 @@ export default {
       questions: [
         {
           id: 0,
-          wyrQuestion: 'Would you rather be incredibly funny or incredibly smart?',
-          wyrAnswer1: 'Incredibly funny',
-          wyrAnswer2: 'Incredibly smart',
-          userSelectionMsg: ''
+          wyrQuestion: '...be incredibly funny or incredibly smart?',
+          wyrAnswer1: 'Be incredibly funny',
+          wyrAnswer2: 'Be incredibly smart',
         },
         {
           id: 1,
-          wyrQuestion: 'Would you rather live in a place with a lot of trees or live in a place near the ocean?',
+          wyrQuestion: '...live in a place with a lot of trees or live in a place near the ocean?',
           wyrAnswer1: 'Live by lots of trees',
           wyrAnswer2: 'Live by the ocean',
-          userSelectionMsg: ''
         },
         {
           id: 2,
-          wyrQuestion: 'Would you rather be a famous inventor or a famous writer?',
+          wyrQuestion: '...be a famous inventor or a famous writer?',
           wyrAnswer1: 'Be a famous inventor',
           wyrAnswer2: 'Be a famous writer',
-          userSelectionMsg: ''
         }
-      ]
-      
+      ],
+      userSelections: [],
+      choiceMade: false, 
     }
   },
   methods: {
     answerChanged(choice) {
-      this.userSelectionMsg = `Thanks! You chose ${choice}.`
+      
+      // Add user's choice to list to be displayed on page
+      this.userSelections.push(choice)
+      this.choiceMade = true
+      
+      // Ensure unique values in list (cannot add the same choice twice)
+      this.userSelections = this.userSelections.filter(function (x, i, a) { 
+        return a.indexOf(x) === i; 
+      });
+
     }
   }
 }
@@ -71,20 +88,36 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #213433;
-  margin-top: 70px;
   background-color: rgb(26, 59, 49);
+  margin-bottom: 150px;
 }
 
 #user-selection-msg-p {
   color: white;
-  padding: 20px 0 32px;
+  padding: 20px 0 32px 0px;
   font-size: 18px;
 }
 
-#wyr-h1 {
-  margin: 30px 100px 0px;
+.wyr-h1 {
+  margin: 0px 100px 0px;
   padding: 20px;
   background-color: white;
+}
+
+.userSelection {
+  color: white;
+  text-align: center;
+  display: inline-block;
+  font-size: 20px;
+}
+
+li {
+  text-align: left;
+}
+
+#user-message {
+  color: white;
+  text-align: center;
+  font-size: 20px;
 }
 </style>
